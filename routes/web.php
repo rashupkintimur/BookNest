@@ -26,6 +26,7 @@ Route::get("/hotels/{id}", [HotelController::class, "show"])->middleware(["auth"
 Route::get("/bookings", [BookingController::class, "index"])->middleware(["auth", "verified"])->name("bookings.index");
 Route::get("/bookings/{id}", [BookingController::class, "show"])->middleware(["auth", "verified"])->name("bookings.show");
 Route::post("/bookings", [BookingController::class, "store"])->middleware(["auth", "verified"])->name("bookings.store");
+Route::post("/bookings/{id}", [BookingController::class, "delete"])->middleware(["auth", "verified"])->name("bookings.cancel");
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

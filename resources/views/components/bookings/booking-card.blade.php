@@ -29,9 +29,13 @@
                         </p>
                     </div>
                 </div>
-                <div class="flex justify-end space-x-8 items-end w-full">
-                    <p class="text-base xl:text-lg font-semibold leading-6 text-gray-800">
+                <div class="flex flex-col justify-end space-x-8 items-end w-full">
+                    <p class="text-base xl:text-lg mb-5 font-semibold leading-6 text-gray-800">
                         Стоимость: {{ $booking->price }} руб</p>
+                    <form class="ml-4" method="POST" action="{{ route('bookings.cancel', ["id" => $booking->id]) }}">
+                        @csrf
+                        <x-the-button class=" h-full w-full">{{ __('Отменить бронь') }}</x-the-button>
+                    </form>
                 </div>
             </div>
         </div>

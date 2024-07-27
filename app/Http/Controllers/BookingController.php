@@ -6,13 +6,15 @@ use App\Models\Booking;
 use App\Models\Room;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class BookingController extends Controller
 {
     public function index() {
-        $bookings = Booking::all();
+        $otherBookings = Booking::where("user_id", "!=", Auth::user()->id)->get();
+        $myBookings = Booking::where("user_id", Auth::user()->id)->get();
 
-        return view("bookings.index", ["bookings" => $bookings]);
+        return view("bookings.index", ["otherBookings" => $otherBookings, "myBookings" => $myBookings]);
     }
 
     public function show(int $id) {
@@ -37,5 +39,11 @@ class BookingController extends Controller
         $booking->save();
 
         return redirect("/hotels");
+    }
+
+    public function delete(int $id) {
+        Booking::where("id", $id)->delete();
+
+        return redirect("/bookings");
     }
 }
